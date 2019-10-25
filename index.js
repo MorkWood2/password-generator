@@ -15,7 +15,7 @@ const randomFunc = {
 	symbol: getRandomSymbol
 }
 //generate event listen
-generateEL.addEventListener('click', () => {
+generateEl.addEventListener('click', () => {
   const length = +lengthEl.value;
 	const hasLower = lowercaseEl.checked;
 	const hasUpper = uppercaseEl.checked;
@@ -37,8 +37,18 @@ function generatePassword(lower, upper, number, symbol, length){
   //2. filter out unchecked types
   //3. loop over length call generator function for each types
   //4. add final pw to the pw var and return
+let generatedPassword = ''; // set to an empty string
 
-    
+const typesCount = lower + upper + number + symbol;
+
+console.log('typesCount: ', typesCount);
+
+const typesArr = [{lower}, {upper}, {number}, {symbol}]
+.filter(item => Object.values(item)[0]
+);
+
+console.log('types Arr:', typesArr);
+
 }
 //Generator functions - http://www.net-comber.com/charset.html
 
@@ -55,3 +65,4 @@ function getRandomSymbol(){
   const symbols =  '!@#$%^&*(){}[]=<>/,.'
   return symbols[Math.floor(Math.random() * symbols.length)];
 }
+
