@@ -6,7 +6,7 @@ const lowercaseEl = document.getElementById('lowercase');
 const numbersEl = document.getElementById('numbers');
 const symbolsEl = document.getElementById('symbols');
 const generateEl = document.getElementById('generate');
-const clipboard = document.getElementById('clipboard');
+const clipboardEL = document.getElementById('clipboard');
 
 const randomFunc = {
 	lower: getRandomLower,
@@ -32,6 +32,25 @@ generateEl.addEventListener('click', () => {
     hasSymbol,
     length
       );
+});
+
+
+//copy password to clipboard
+
+clipboardEL.addEventListener('click', () => {
+  const textarea = document.createElement('textarea');
+  const password = resultEl.innerText;
+
+  if(!password){
+    return;
+  }
+
+  textarea.value = password;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  textarea.remove();
+  alert('password copied to clipboard!')
 });
 
 //Generate password function
@@ -65,7 +84,7 @@ if (typesCount === 0) {
   }
 
 const finalPassword = generatedPassword.slice(0, length);
- 
+
 return finalPassword;
 }
 //Generator functions - http://www.net-comber.com/charset.html
