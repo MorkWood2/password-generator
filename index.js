@@ -17,14 +17,17 @@ const randomFunc = {
 //generate event listen
 generateEl.addEventListener('click', () => {
   const length = +lengthEl.value;
+  //unchecked dom elements don't have a variable
 	const hasLower = lowercaseEl.checked;
 	const hasUpper = uppercaseEl.checked;
 	const hasNumber = numbersEl.checked;
 	const hasSymbol = symbolsEl.checked;
 
+//pass the values into generatePassword function
+
   resultEl.innerText = generatePassword(
-    hasLower,
     hasUpper,
+    hasLower,
     hasNumber,
     hasSymbol,
     length
@@ -32,7 +35,7 @@ generateEl.addEventListener('click', () => {
 });
 
 //Generate password function
-function generatePassword(lower, upper, number, symbol, length){
+function generatePassword(upper, lower, number, symbol, length){
   //1. init pw var
   //2. filter out unchecked types
   //3. loop over length call generator function for each types
@@ -41,14 +44,29 @@ let generatedPassword = ''; // set to an empty string
 
 const typesCount = lower + upper + number + symbol;
 
-console.log('typesCount: ', typesCount);
+// console.log('TypesCount: ', typesCount);
 
-const typesArr = [{lower}, {upper}, {number}, {symbol}]
-.filter(item => Object.values(item)[0]
+const typesArr = [{lower}, {upper}, {number}, {symbol}].filter
+(item => Object.values(item)[0]
 );
 
-console.log('types Arr:', typesArr);
+// console.log('types Arr:', typesArr);
 
+if (typesCount === 0) {
+  return '';
+  }
+  for (let i = 0; i < length; i += typesCount) {
+    typesArr.forEach( type => {
+      const funcName = Object.keys(type)[0];
+        // console.log('funcName: ',  funcName);
+
+      generatedPassword += randomFunc[funcName]();
+    });
+  }
+
+const finalPassword = generatedPassword.slice(0, length);
+ 
+return finalPassword;
 }
 //Generator functions - http://www.net-comber.com/charset.html
 
@@ -65,4 +83,5 @@ function getRandomSymbol(){
   const symbols =  '!@#$%^&*(){}[]=<>/,.'
   return symbols[Math.floor(Math.random() * symbols.length)];
 }
+
 
